@@ -1,4 +1,4 @@
-# Nest.js Graphql Petstore
+# Nest.js Graphql Petstore API
 A GraphQL server and API utilizing the NestJS framework
 
 ## Tech Stack
