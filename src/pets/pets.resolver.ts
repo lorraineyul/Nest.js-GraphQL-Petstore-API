@@ -14,7 +14,7 @@ export class PetsResolver {
   }
 
   @Query(returns => [Pet])
-  pets(): Promise<Pet[]> {
+  getPets(): Promise<Pet[]> {
     return this.petsService.findAll();
   }
 

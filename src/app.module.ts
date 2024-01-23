@@ -6,7 +6,6 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { ApolloDriver } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Pet } from './pets/pet.entity';
 import { ConfigModule } from '@nestjs/config';
 import { OwnersModule } from './owners/owners.module';
 
@@ -20,8 +19,8 @@ import { OwnersModule } from './owners/owners.module';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: '',
-      password: '',
+      username: 'velvetdionysus',
+      password: 'password',
       database: 'petstore',
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true,
