@@ -14,12 +14,12 @@ export class OwnersResolver {
   }
 
   @Query(() => [Owner], { name: 'owners' })
-  findAll() {
+  getOwners() {
     return this.ownersService.findAll();
   }
 
   @Query(() => Owner, { name: 'owner' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  getOwner(@Args('id', { type: () => Int }) id: number) {
     return this.ownersService.findOne(id);
   }
 
