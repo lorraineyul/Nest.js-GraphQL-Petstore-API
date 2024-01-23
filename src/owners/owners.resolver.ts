@@ -13,20 +13,21 @@ export class OwnersResolver {
     return this.ownersService.create(createOwnerInput);
   }
 
-  @Query(() => [Owner], { name: 'owners' })
+  @Query(() => [Owner])
   getOwners() {
     return this.ownersService.findAll();
   }
 
-  @Query(() => Owner, { name: 'owner' })
+  @Query(() => Owner)
   getOwner(@Args('id', { type: () => Int }) id: number) {
     return this.ownersService.findOne(id);
   }
 
-  // @Mutation(() => Owner)
-  // updateOwner(@Args('updateOwnerInput') updateOwnerInput: UpdateOwnerInput) {
-  //   return this.ownersService.update(updateOwnerInput.id, updateOwnerInput);
-  // }
+  @Mutation(() => Owner)
+  updateOwner(@Args('id', { type: () => Int }) id: number,
+              @Args('updateOwnerInput') updateOwnerInput: UpdateOwnerInput) {
+    return this.ownersService.update(id, updateOwnerInput);
+  }
 
   @Mutation(() => Owner)
   removeOwner(@Args('id', { type: () => Int }) id: number) {

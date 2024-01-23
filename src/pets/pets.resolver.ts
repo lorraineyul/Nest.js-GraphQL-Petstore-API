@@ -18,15 +18,20 @@ export class PetsResolver {
     return this.petsService.findAll();
   }
 
-  @ResolveField(returns => Owner)
-  owner(@Parent() pet: Pet): Promise<Owner> {
-    return this.petsService.getOwner(pet.ownerId)
-  }
-
   @Mutation(returns => Pet)
   createPet(
     @Args('createPetInput') createPetInput: createPetInput,
   ): Promise<Pet> {
     return this.petsService.createPet(createPetInput);
+  }
+
+  @Mutation(() => Pet)
+  removePet(@Args('id', { type: () => Int }) id: number) {
+    return this.petsService.remove(id);
+  }
+
+  @ResolveField(returns => Pet)
+  owner(@Parent() pet: Pet): Promise<Owner> {
+    return this.petsService.getOwner(pet.ownerId)
   }
 }

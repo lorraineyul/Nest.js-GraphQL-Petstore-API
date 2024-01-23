@@ -7,28 +7,41 @@ import { Owner } from './entities/owner.entity';
 
 @Injectable()
 export class OwnersService {
-  constructor(@InjectRepository(Owner) private ownersRepository: Repository<Owner>) {}
+  constructor(
+    @InjectRepository(Owner) private ownersRepository: Repository<Owner>,
+  ) {}
 
-  findAll() {
+  async findAll(): Promise<Owner[]> {
     return this.ownersRepository.find();
   }
 
-  async findOne(id: number): Promise<Owner> {
-    return this.ownersRepository.findOne({where: {id:id}});
+  async findOne(ownerId: number): Promise<Owner> {
+    return this.ownersRepository.findOne({ where: { id: ownerId } });
   }
 
-  create(createOwnerInput: CreateOwnerInput) {
-    const newOwner = this.ownersRepository.create(createOwnerInput as DeepPartial<Owner>)
+  async create(createOwnerInput: CreateOwnerInput): Promise<Owner> {
+    const newOwner = this.ownersRepository.create(
+      createOwnerInput as DeepPartial<Owner>,
+    );
 
     return this.ownersRepository.save(newOwner);
   }
 
-
-  update(id: number, updateOwnerInput: UpdateOwnerInput) {
-    return `This action updates a #${id} owner`;
+  async update(ownerId: number, updateOwnerInput: UpdateOwnerInput): Promise<Owner> {
+    await this.ownersRepository.update(ownerId, updateOwnerInput)
+    const owner = await this.ownersRepository.findOneBy({id: ownerId}) 
+    if (owner) {
+      return owner
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} owner`;
+  async remove(ownerId: number) {
+    const removeOwner = await this.ownersRepository.delete({ id: ownerId });
+
+    if (removeOwner.affected == 1) {
+      return `Owner with ID ${ownerId} deleted successfully.`;
+    } else {
+      return `Owner with ID ${ownerId} not found.`;
+    }
   }
 }
